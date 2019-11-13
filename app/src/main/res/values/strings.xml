@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AdrecDemo</string>
+    <string name="action_settings">Settings</string>
+    <string name="app_slogan">Foobar</string>
+    <string name="dice42">Dé 42</string>
+    <string name="dice20">Dé 20</string>
+    <string name="dice6">Dé 6</string>
+</resources>
