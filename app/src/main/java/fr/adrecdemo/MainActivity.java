@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -17,8 +18,11 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private int lastDice = 0;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 RadioGroup diceGroup = findViewById(R.id.diceGroup);
+                TextView result = findViewById(R.id.result);
+
 
                 int selectedId = diceGroup.getCheckedRadioButtonId();
                 int sizeDice = 51;
@@ -43,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 int num = (int) (Math.random() * sizeDice + 1);
+
+                MainActivity.this.lastDice = num;
+                result.setText("Last dice " + num);
+
 
                 Snackbar.make(view, "Random num: " + num, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -70,5 +80,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt("lastDice", this.lastDice);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        this.lastDice = savedInstanceState.getInt("lastDice", 0);
+        TextView result = findViewById(R.id.result);
+        result.setText("Last dice " + this.lastDice);
+
+
     }
 }
